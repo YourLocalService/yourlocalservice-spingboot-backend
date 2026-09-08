@@ -1,4 +1,4 @@
-package com.nikita_ovramenko.sping_all_purpose_server.file;
+package com.nikita_ovramenko.sping_all_purpose_server.file.upload;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nikita_ovramenko.sping_all_purpose_server.file.FileService;
 import com.nikita_ovramenko.sping_all_purpose_server.organization.model.Organization;
 import com.nikita_ovramenko.sping_all_purpose_server.organization.service.OrganizationLookup;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 /**
  * Mints a presigned PUT for one quote photo.

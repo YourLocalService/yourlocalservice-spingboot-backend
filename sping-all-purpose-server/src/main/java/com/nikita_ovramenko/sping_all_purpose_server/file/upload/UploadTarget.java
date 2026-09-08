@@ -1,4 +1,4 @@
-package com.nikita_ovramenko.sping_all_purpose_server.file;
+package com.nikita_ovramenko.sping_all_purpose_server.file.upload;
 
 /**
  * Where to PUT one photo, and the key to send back with the quote.

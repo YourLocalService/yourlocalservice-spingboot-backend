@@ -1,4 +1,4 @@
-package com.nikita_ovramenko.sping_all_purpose_server.file;
+package com.nikita_ovramenko.sping_all_purpose_server.file.upload;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

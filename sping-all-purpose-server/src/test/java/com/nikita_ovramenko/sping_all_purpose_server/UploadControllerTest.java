@@ -17,9 +17,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.nikita_ovramenko.sping_all_purpose_server.file.FileService;
-import com.nikita_ovramenko.sping_all_purpose_server.file.UploadController;
-import com.nikita_ovramenko.sping_all_purpose_server.file.UploadRequest;
-import com.nikita_ovramenko.sping_all_purpose_server.file.UploadTarget;
+import com.nikita_ovramenko.sping_all_purpose_server.file.upload.UploadController;
+import com.nikita_ovramenko.sping_all_purpose_server.file.upload.UploadRequest;
+import com.nikita_ovramenko.sping_all_purpose_server.file.upload.UploadTarget;
 import com.nikita_ovramenko.sping_all_purpose_server.organization.exception.OrganizationNotFoundException;
 import com.nikita_ovramenko.sping_all_purpose_server.organization.model.Organization;
 import com.nikita_ovramenko.sping_all_purpose_server.organization.service.OrganizationLookup;

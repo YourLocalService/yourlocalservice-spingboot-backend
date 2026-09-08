@@ -1,6 +1,8 @@
 package com.nikita_ovramenko.sping_all_purpose_server.file;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalLong;
@@ -96,6 +98,16 @@ public class FileService {
             log.error("Failed to create presigned GET URL for key={}", key, e);
             return "<link unavailable for " + key + ">";
         }
+    }
+
+    public List<String> createPresignedGetLinks(List<String> keys) {
+        List<String> links = new ArrayList<>();
+
+        for (String key : keys) {
+            links.add(createPresignedGetLink(key));
+        }
+
+        return links;
     }
 
     /**
