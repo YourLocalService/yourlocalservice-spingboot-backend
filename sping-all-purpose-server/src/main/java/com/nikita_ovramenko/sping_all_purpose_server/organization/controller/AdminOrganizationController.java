@@ -3,6 +3,8 @@ package com.nikita_ovramenko.sping_all_purpose_server.organization.controller;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nikita_ovramenko.sping_all_purpose_server.organization.dto.OrganizationCreateRequest;
+import com.nikita_ovramenko.sping_all_purpose_server.common.dto.PageResponse;
 import com.nikita_ovramenko.sping_all_purpose_server.organization.dto.OrganizationDetail;
 import com.nikita_ovramenko.sping_all_purpose_server.organization.dto.OrganizationServicesRequest;
 import com.nikita_ovramenko.sping_all_purpose_server.organization.dto.OrganizationUpdateRequest;
@@ -45,9 +48,11 @@ public class AdminOrganizationController {
     }
 
     @GetMapping
-    @Operation(summary = "List all organizations, including deactivated ones")
-    public List<OrganizationDetail> list() {
-        return organizationAdminService.list();
+    @Operation(summary = "List organizations, including deactivated ones",
+            description = "Paginated with zero-based page, size and sort parameters. Defaults to 20 results sorted by name, then id.")
+    public PageResponse<OrganizationDetail> list(
+            @PageableDefault(size = 20, sort = {"name", "id"}) Pageable pageable) {
+        return organizationAdminService.list(pageable);
     }
 
     @GetMapping("/{id}")

@@ -18,6 +18,8 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -113,8 +115,32 @@ class AdminApiSecurityTest {
     @Test
     @WithMockUser(roles = "MEMBER")
     void methodSecurityAlsoProtectsControllerCallsOutsideTheUrlFilter() {
-        assertThatThrownBy(() -> organizationController.list()).isInstanceOf(AccessDeniedException.class);
+        assertThatThrownBy(() -> organizationController.list(PageRequest.of(0, 20))).isInstanceOf(AccessDeniedException.class);
         verifyNoInteractions(organizationAdminService);
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void organizationListBindsPaginationAndReturnsMetadata() throws Exception {
+        var pageable = PageRequest.of(1, 2, Sort.by(Sort.Direction.DESC, "name"));
+        when(organizationAdminService.list(pageable))
+                .thenReturn(new PageResponse<>(List.of(), 1, 2, 2, 1));
+        mvc.perform(get("/api/admin/organizations")
+                .param("page", "1").param("size", "2").param("sort", "name,desc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.page").value(1))
+                .andExpect(jsonPath("$.size").value(2))
+                .andExpect(jsonPath("$.totalElements").value(2))
+                .andExpect(jsonPath("$.totalPages").value(1));
+        verify(organizationAdminService).list(pageable);
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void organizationListDefaultsToTwentySortedByNameAndId() throws Exception {
+        mvc.perform(get("/api/admin/organizations")).andExpect(status().isOk());
+        verify(organizationAdminService).list(PageRequest.of(0, 20, Sort.by("name", "id")));
     }
 
     @Test

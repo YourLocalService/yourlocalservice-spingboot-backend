@@ -20,7 +20,7 @@ import com.nikita_ovramenko.sping_all_purpose_server.organizationserviceoffering
  * The gate for the Flyway baseline.
  *
  * <p>Boots the whole application against a real Postgres with Flyway enabled and
- * ddl-auto=validate. If it passes, V1-V7 and the JPA mappings agree -- every column
+ * ddl-auto=validate. If it passes, V1-V8 and the JPA mappings agree -- every column
  * type mismatch, missing table, wrong varchar length and timestamp-vs-timestamptz
  * error surfaces here rather than at deploy time.
  */
@@ -51,7 +51,7 @@ class SchemaValidationTest extends AbstractPostgresTest {
         List<String> versions = jdbcTemplate.queryForList(
                 "select version from flyway_schema_history where success = true order by installed_rank",
                 String.class);
-        assertThat(versions).containsExactly("1", "2", "3", "4", "5", "6", "7");
+        assertThat(versions).containsExactly("1", "2", "3", "4", "5", "6", "7", "8");
     }
 
     @Test

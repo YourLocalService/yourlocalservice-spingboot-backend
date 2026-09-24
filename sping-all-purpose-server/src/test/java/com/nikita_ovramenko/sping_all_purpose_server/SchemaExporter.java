@@ -20,6 +20,7 @@ import com.nikita_ovramenko.sping_all_purpose_server.quote.model.Quote;
 import com.nikita_ovramenko.sping_all_purpose_server.quotelineitem.model.QuoteLineItem;
 import com.nikita_ovramenko.sping_all_purpose_server.review.model.Review;
 import com.nikita_ovramenko.sping_all_purpose_server.serviceoffering.model.ServiceOffering;
+import com.nikita_ovramenko.sping_all_purpose_server.userorganization.model.UserOrganization;
 
 /**
  * Development utility: writes the DDL Hibernate expects for the current mappings,
@@ -60,6 +61,7 @@ public final class SchemaExporter {
                     .addAnnotatedClass(Organization.class)
                     .addAnnotatedClass(ServiceOffering.class)
                     .addAnnotatedClass(OrganizationServiceOffering.class)
+                    .addAnnotatedClass(UserOrganization.class)
                     .addAnnotatedClass(Quote.class)
                     .addAnnotatedClass(QuoteLineItem.class)
                     .addAnnotatedClass(Job.class)

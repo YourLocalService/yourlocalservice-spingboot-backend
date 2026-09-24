@@ -5,11 +5,12 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nikita_ovramenko.sping_all_purpose_server.common.exception.BadRequestException;
+import com.nikita_ovramenko.sping_all_purpose_server.common.dto.PageResponse;
 import com.nikita_ovramenko.sping_all_purpose_server.organization.dto.MailSettingsRequest;
 import com.nikita_ovramenko.sping_all_purpose_server.organization.dto.OrganizationCreateRequest;
 import com.nikita_ovramenko.sping_all_purpose_server.organization.dto.OrganizationDetail;
@@ -55,10 +56,8 @@ public class OrganizationAdminService {
 
     /** Includes inactive organizations: this is the screen you use to reactivate one. */
     @Transactional(readOnly = true)
-    public List<OrganizationDetail> list() {
-        return organizationRepo.findAll(Sort.by("name")).stream()
-                .map(organizationMapper::toDetail)
-                .toList();
+    public PageResponse<OrganizationDetail> list(Pageable pageable) {
+        return PageResponse.of(organizationRepo.findAll(pageable), organizationMapper::toDetail);
     }
 
     @Transactional(readOnly = true)
